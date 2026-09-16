@@ -1,0 +1,116 @@
+function Vout = ENdp(RPAValues,RPBValues,RPCValues,pValues,VssNValues)
+Vs_s_0 = VssNValues(:,1);
+Vs_s_1 = VssNValues(:,2);
+Vs_s_2 = VssNValues(:,3);
+Vs_s_3 = VssNValues(:,4);
+PAx = RPAValues(:,1);
+PAy = RPAValues(:,2);
+PAz = RPAValues(:,3);
+PCx = RPCValues(:,1);
+PCy = RPCValues(:,2);
+PCz = RPCValues(:,3);
+PBx = RPBValues(:,1);
+PBy = RPBValues(:,2);
+PBz = RPBValues(:,3);
+oo2p = 0.5./pValues;
+ABx = PBx(1)-PAx(1);
+ABy = PBy(1)-PAy(1);
+ABz = PBz(1)-PAz(1);
+%[p|VeN|s](0)
+Vpx_s_0 = PAx.*Vs_s_0 - PCx.*Vs_s_1;
+Vpy_s_0 = PAy.*Vs_s_0 - PCy.*Vs_s_1;
+Vpz_s_0 = PAz.*Vs_s_0 - PCz.*Vs_s_1;
+%[p|VeN|s](1)
+Vpx_s_1 = PAx.*Vs_s_1 - PCx.*Vs_s_2;
+Vpy_s_1 = PAy.*Vs_s_1 - PCy.*Vs_s_2;
+Vpz_s_1 = PAz.*Vs_s_1 - PCz.*Vs_s_2;
+%[p|VeN|s](2)
+Vpx_s_2 = PAx.*Vs_s_2 - PCx.*Vs_s_3;
+Vpy_s_2 = PAy.*Vs_s_2 - PCy.*Vs_s_3;
+Vpz_s_2 = PAz.*Vs_s_2 - PCz.*Vs_s_3;
+%Contracted (p|VeN|s)
+Vpx_s = sum(Vpx_s_0);
+Vpy_s = sum(Vpy_s_0);
+Vpz_s = sum(Vpz_s_0);
+%[d|VeN|s](0)
+Vdxx_s_0 = PAx.*Vpx_s_0 - PCx.*Vpx_s_1 + 1.*oo2p.*(Vs_s_0 - Vs_s_1);
+Vdxy_s_0 = PAx.*Vpy_s_0 - PCx.*Vpy_s_1;
+Vdxz_s_0 = PAx.*Vpz_s_0 - PCx.*Vpz_s_1;
+Vdyy_s_0 = PAy.*Vpy_s_0 - PCy.*Vpy_s_1 + 1.*oo2p.*(Vs_s_0 - Vs_s_1);
+Vdyz_s_0 = PAy.*Vpz_s_0 - PCy.*Vpz_s_1;
+Vdzz_s_0 = PAz.*Vpz_s_0 - PCz.*Vpz_s_1 + 1.*oo2p.*(Vs_s_0 - Vs_s_1);
+%[d|VeN|s](1)
+Vdxx_s_1 = PAx.*Vpx_s_1 - PCx.*Vpx_s_2 + 1.*oo2p.*(Vs_s_1 - Vs_s_2);
+Vdxy_s_1 = PAx.*Vpy_s_1 - PCx.*Vpy_s_2;
+Vdxz_s_1 = PAx.*Vpz_s_1 - PCx.*Vpz_s_2;
+Vdyy_s_1 = PAy.*Vpy_s_1 - PCy.*Vpy_s_2 + 1.*oo2p.*(Vs_s_1 - Vs_s_2);
+Vdyz_s_1 = PAy.*Vpz_s_1 - PCy.*Vpz_s_2;
+Vdzz_s_1 = PAz.*Vpz_s_1 - PCz.*Vpz_s_2 + 1.*oo2p.*(Vs_s_1 - Vs_s_2);
+%Contracted (d|VeN|s)
+Vdxx_s = sum(Vdxx_s_0);
+Vdxy_s = sum(Vdxy_s_0);
+Vdxz_s = sum(Vdxz_s_0);
+Vdyy_s = sum(Vdyy_s_0);
+Vdyz_s = sum(Vdyz_s_0);
+Vdzz_s = sum(Vdzz_s_0);
+%[f|VeN|s](0)
+Vfxxx_s_0 = PAx.*Vdxx_s_0 - PCx.*Vdxx_s_1 + 2.*oo2p.*(Vpx_s_0 - Vpx_s_1);
+Vfxxy_s_0 = PAy.*Vdxx_s_0 - PCy.*Vdxx_s_1;
+Vfxxz_s_0 = PAz.*Vdxx_s_0 - PCz.*Vdxx_s_1;
+Vfxyy_s_0 = PAx.*Vdyy_s_0 - PCx.*Vdyy_s_1;
+Vfxyz_s_0 = PAx.*Vdyz_s_0 - PCx.*Vdyz_s_1;
+Vfxzz_s_0 = PAx.*Vdzz_s_0 - PCx.*Vdzz_s_1;
+Vfyyy_s_0 = PAy.*Vdyy_s_0 - PCy.*Vdyy_s_1 + 2.*oo2p.*(Vpy_s_0 - Vpy_s_1);
+Vfyyz_s_0 = PAz.*Vdyy_s_0 - PCz.*Vdyy_s_1;
+Vfyzz_s_0 = PAy.*Vdzz_s_0 - PCy.*Vdzz_s_1;
+Vfzzz_s_0 = PAz.*Vdzz_s_0 - PCz.*Vdzz_s_1 + 2.*oo2p.*(Vpz_s_0 - Vpz_s_1);
+%Contracted (f|VeN|s)
+Vfxxx_s = sum(Vfxxx_s_0);
+Vfxxy_s = sum(Vfxxy_s_0);
+Vfxxz_s = sum(Vfxxz_s_0);
+Vfxyy_s = sum(Vfxyy_s_0);
+Vfxyz_s = sum(Vfxyz_s_0);
+Vfxzz_s = sum(Vfxzz_s_0);
+Vfyyy_s = sum(Vfyyy_s_0);
+Vfyyz_s = sum(Vfyyz_s_0);
+Vfyzz_s = sum(Vfyzz_s_0);
+Vfzzz_s = sum(Vfzzz_s_0);
+%[d|VeN|p](0)
+Vdxx_px = ABx*Vdxx_s + Vfxxx_s;
+Vdxx_py = ABy*Vdxx_s + Vfxxy_s;
+Vdxx_pz = ABz*Vdxx_s + Vfxxz_s;
+Vdxy_px = ABx*Vdxy_s + Vfxxy_s;
+Vdxy_py = ABy*Vdxy_s + Vfxyy_s;
+Vdxy_pz = ABz*Vdxy_s + Vfxyz_s;
+Vdxz_px = ABx*Vdxz_s + Vfxxz_s;
+Vdxz_py = ABy*Vdxz_s + Vfxyz_s;
+Vdxz_pz = ABz*Vdxz_s + Vfxzz_s;
+Vdyy_px = ABx*Vdyy_s + Vfxyy_s;
+Vdyy_py = ABy*Vdyy_s + Vfyyy_s;
+Vdyy_pz = ABz*Vdyy_s + Vfyyz_s;
+Vdyz_px = ABx*Vdyz_s + Vfxyz_s;
+Vdyz_py = ABy*Vdyz_s + Vfyyz_s;
+Vdyz_pz = ABz*Vdyz_s + Vfyzz_s;
+Vdzz_px = ABx*Vdzz_s + Vfxzz_s;
+Vdzz_py = ABy*Vdzz_s + Vfyzz_s;
+Vdzz_pz = ABz*Vdzz_s + Vfzzz_s;
+V = zeros(6,3);
+V(1,1) = 1/1.73205080756888*Vdxx_px;
+V(1,2) = 1/1.73205080756888*Vdxx_py;
+V(1,3) = 1/1.73205080756888*Vdxx_pz;
+V(2,1) = Vdxy_px;
+V(2,2) = Vdxy_py;
+V(2,3) = Vdxy_pz;
+V(3,1) = Vdxz_px;
+V(3,2) = Vdxz_py;
+V(3,3) = Vdxz_pz;
+V(4,1) = 1/1.73205080756888*Vdyy_px;
+V(4,2) = 1/1.73205080756888*Vdyy_py;
+V(4,3) = 1/1.73205080756888*Vdyy_pz;
+V(5,1) = Vdyz_px;
+V(5,2) = Vdyz_py;
+V(5,3) = Vdyz_pz;
+V(6,1) = 1/1.73205080756888*Vdzz_px;
+V(6,2) = 1/1.73205080756888*Vdzz_py;
+V(6,3) = 1/1.73205080756888*Vdzz_pz;
+Vout = V;end

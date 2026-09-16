@@ -1,0 +1,10 @@
+fxxx_s_s_s_1 = PAx*dxx_s_s_s_1 + WPx*dxx_s_s_s_2 + 2*oo2p*(px_s_s_s_1 - qoppq*px_s_s_s_2)
+fxxy_s_s_s_1 = PAy*dxx_s_s_s_1 + WPy*dxx_s_s_s_2
+fxxz_s_s_s_1 = PAz*dxx_s_s_s_1 + WPz*dxx_s_s_s_2
+fxyy_s_s_s_1 = PAx*dyy_s_s_s_1 + WPx*dyy_s_s_s_2
+fxyz_s_s_s_1 = PAx*dyz_s_s_s_1 + WPx*dyz_s_s_s_2
+fxzz_s_s_s_1 = PAx*dzz_s_s_s_1 + WPx*dzz_s_s_s_2
+fyyy_s_s_s_1 = PAy*dyy_s_s_s_1 + WPy*dyy_s_s_s_2 + 2*oo2p*(py_s_s_s_1 - qoppq*py_s_s_s_2)
+fyyz_s_s_s_1 = PAz*dyy_s_s_s_1 + WPz*dyy_s_s_s_2
+fyzz_s_s_s_1 = PAy*dzz_s_s_s_1 + WPy*dzz_s_s_s_2
+fzzz_s_s_s_1 = PAz*dzz_s_s_s_1 + WPz*dzz_s_s_s_2 + 2*oo2p*(pz_s_s_s_1 - qoppq*pz_s_s_s_2)

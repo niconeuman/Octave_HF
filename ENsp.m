@@ -1,0 +1,29 @@
+function Vout = ENsp(RPAValues,RPBValues,RPCValues,pValues,VssNValues)
+Vs_s_0 = VssNValues(:,1);
+Vs_s_1 = VssNValues(:,2);
+PAx = RPAValues(:,1);
+PAy = RPAValues(:,2);
+PAz = RPAValues(:,3);
+PCx = RPCValues(:,1);
+PCy = RPCValues(:,2);
+PCz = RPCValues(:,3);
+PBx = RPBValues(:,1);
+PBy = RPBValues(:,2);
+PBz = RPBValues(:,3);
+oo2p = 0.5./pValues;
+ABx = PBx(1)-PAx(1);
+ABy = PBy(1)-PAy(1);
+ABz = PBz(1)-PAz(1);
+%[p|VeN|s](0)
+Vpx_s_0 = PAx.*Vs_s_0 - PCx.*Vs_s_1;
+Vpy_s_0 = PAy.*Vs_s_0 - PCy.*Vs_s_1;
+Vpz_s_0 = PAz.*Vs_s_0 - PCz.*Vs_s_1;
+%Contracted (p|VeN|s)
+Vpx_s = sum(Vpx_s_0);
+Vpy_s = sum(Vpy_s_0);
+Vpz_s = sum(Vpz_s_0);
+V = zeros(1,3);
+V(1,1) = Vs_px;
+V(1,2) = Vs_py;
+V(1,3) = Vs_pz;
+Vout = V;end
