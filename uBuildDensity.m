@@ -11,3 +11,9 @@ end
 for i = 1:Nelb
     Db = Db + 1*Cb(:,i)*Cb(:,i)';
 end
+
+#Change: 17sep2026
+#Symmetrize matrices
+
+Da = (Da+Da')/2;
+Db = (Db+Db')/2;

@@ -26,8 +26,22 @@ function gabcd = shellOS(basis_a,basis_b,basis_c,basis_d,L1,L2,L3,L4,Boys_Table,
 
 if ( L1 == 0 && L2 == 0 && (L3 > 0 || L4 > 0))
 
-gswap = shellOS(basis_c,basis_d,basis_a,basis_b,L3,L4,L1,L2,Boys_Table,pair_data2,c,d,a,b);
-gabcd = permute(gswap,[3 4 1 2]);
+##gswap = shellOS(basis_c,basis_d,basis_a,basis_b,L3,L4,L1,L2,Boys_Table,pair_data2,c,d,a,b);
+##gabcd = permute(gswap,[3 4 1 2]);
+
+#Note on 17sep2026. Because L4 can be larger than L3, and I'm already considering this if case, perhaps it's not correctly using the right L4 > L3 if case
+#So I will include an if inside this if
+    if ( L4 > L3)
+##        disp("The L values are: ");
+##        disp([L1, L2, L3, L4]);
+        gswap = shellOS(basis_d,basis_c,basis_a,basis_b,L4,L3,L1,L2,Boys_Table,pair_data2,d,c,a,b);
+        gabcd = permute(gswap,[3 4 2 1]);
+    else
+        gswap = shellOS(basis_c,basis_d,basis_a,basis_b,L3,L4,L1,L2,Boys_Table,pair_data2,c,d,a,b);
+        gabcd = permute(gswap,[3 4 1 2]);
+    endif
+#This code gave wrong sizes in uBuildJK_nosym. Probably it was OK before, as shellOS was called recursively
+#The correct permutation was 3 4 2 1, not 4 3 1 2. Now it works (not sure if it gives the correct results)
 
 elseif ( L2 > L1)
 
@@ -78,8 +92,16 @@ elseif ( L1 == 1 && L2 == 0 && L3 == 1 && L4 == 1)
 
 elseif ( L1 == 0 && L2 == 1 && L3 == 1 && L4 == 1)
 
+    #17sep2026: maybe this is the mistake
     gsppp_swap = shellOS(basis_c,basis_d,basis_a,basis_b,L3,L4,L1,L2,Boys_Table,pair_data2,c,d,a,b);
     gabcd = permute(gsppp_swap,[3 4 1 2]);
+
+    #17sep2026: I try this code instead
+
+##    gsppp_swap = shellOS(basis_c,basis_d,basis_b,basis_a,L3,L4,L2,L1,Boys_Table,pair_data2,c,d,b,a);
+##    gabcd = permute(gsppp_swap,[3 4 2 1]);
+
+    #17sep2026: this apparently did not fix the code, but gave the same results as before. I leave it like this
 
 elseif( L1 == 1 && L2 == 1 && L3 == 0 && L4 == 0)
 
@@ -373,8 +395,9 @@ gabcd = OSdddd(RPAValues,RPBValues,RQCValues,RQDValues,RWPValues,RWQValues,pValu
 
 else
 
-gabcd_swap = shellOS(basis_c,basis_d,basis_a,basis_b,L3,L4,L1,L2,Boys_Table,pair_data2,c,d,a,b);
-gabcd = permute(gabcd_swap,[3 4 1 2]);
+#17sep2026: I try commenting this. No change, but no error so far
+##gabcd_swap = shellOS(basis_c,basis_d,basis_a,basis_b,L3,L4,L1,L2,Boys_Table,pair_data2,c,d,a,b);
+##gabcd = permute(gabcd_swap,[3 4 1 2]);
 
 end  %if
 
